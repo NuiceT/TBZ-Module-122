@@ -1,4 +1,9 @@
-# LB2 - Dokumentation
+# LB2 - Dokumentation <!-- omit in toc -->
+
+## Inhaltsverzeichnis <!-- omit in toc -->
+
+- [Einführung](#einführung)
+- [Beschreibung](#beschreibung)
 
 ## Einführung
 
