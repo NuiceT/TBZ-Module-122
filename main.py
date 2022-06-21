@@ -1,3 +1,4 @@
+from datetime import datetime, timedelta
 import os
 import string
 import requests
@@ -27,12 +28,27 @@ def sendMail(subject: string, message: string):
 
 
 def main():
-    response = requests.get(
-        url="https://api.coingecko.com/api/v3/simple/price?ids=bitcoin&vs_currencies=usd"
-    ).json()
+    message = ""
+    for x in range(8):
+        date = datetime.today().date() - timedelta(days=x)
+        message += (
+            "<tr><th>"
+            + str(date.strftime("%d.%m.%Y"))
+            + "</th><td>CHF "
+            + str(
+                round(
+                    requests.get(
+                        url="https://api.coingecko.com/api/v3/coins/bitcoin/history?date="
+                        + str(date.strftime("%d-%m-%Y"))
+                    ).json()["market_data"]["current_price"]["chf"],
+                    2,
+                )
+            )
+            + "</td></tr>"
+        )
     sendMail(
-        "Wöchentlicher Bitcoin Preis",
-        "<h1>" + str(response["bitcoin"]["usd"]) + "</h1>",
+        "Wöchentlicher Bitcoin Bericht",
+        "<h1>Wöchentlicher Bitcoin Bericht</h1><table>" + message + "</table>",
     )
 
 
